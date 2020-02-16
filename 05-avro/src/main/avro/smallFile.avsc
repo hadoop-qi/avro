@@ -1,0 +1,8 @@
+{"namespace": "com.zhiyou100.merge",
+ "type": "record",
+ "name": "SmallFile",
+ "fields": [
+     {"name": "name", "type": "string"},
+     {"name": "content", "type": "string"}
+ ]
+}

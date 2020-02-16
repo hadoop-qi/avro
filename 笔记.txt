@@ -1,0 +1,68 @@
+Java 的序列化：
+    1. 只有实现了 Serializable 接口的类才能进行序列化操作。
+    2. Java 序列化的时候会保存类的所有信息，数据量大，速度较慢。
+
+Hadoop 需要的序列化：
+    1. 序列化操作使用非常频繁，要求序列化性能一定要高（速度快，数据准确）。
+    2. Hadoop 还需要兼容其他编程语言
+
+Java 的序列化不能满足上述要求，成为了 Hadoop 的瓶颈，所以才有了 Avro 项目。
+
+其他序列化框架：Thrift（Apache）, Protocol Buffers（google）
+
+
+Schema（模式）：定义了需要序列化和反序列化的数据的结构组成（Java 中的 类）
+    读写操作都需要依赖 Schema
+    Schema 和 Data 保存在同一文件中
+    Schema 可以被其他语言解析
+    读写即快又小
+    Schema 使用 JSON 定义属性
+
+
+avro 的插件可以根据 Schema 文件生成对应 Java 类
+    sourceDirectory：avsc 文件的保存地址
+    outputDirectory：Java 类保存地址
+
+JSON 中：
+    "" 表示字符串
+   没有 "" 表示数字
+   {} 表示字典（kv 对），所有类都要转换为字典表示
+   [] 表示数组
+
+一个 avsc 中只能定义一个类
+
+
+    @Override 错误需要修改编译版本高于 1.5
+
+
+package com.zhiyou100.entity
+public class Employee {
+
+   String name;
+   int age;
+   boolean gender;
+   double salary;
+}
+
+
+mapreduce 中读取 avro 文件
+    1. job.setInputFormatClass(AvroKeyInputFormat.class);
+    2. AvroJob.setInputKeySchema(job, SmallFile.getClassSchema());
+    3. map 的输入：AvroKey<T>, NullWritable
+    4. key.datum(); 获取序列化到 avro 中的每一个对象
+    5. 通过对象的属性获取每一个数据
+
+mapreduce 中输出 avro 文件
+    1. job.setOutputFormatClass() 设置为 AvroKeyOutputFormat 或者 AvroValueOutputFormat
+    2. AvroJob.setOutputKeySchema(job, schema); 设置输出内容模式
+    3. reduce 的输出：AvroKey<T>, NullWritable
+    4. 计算结果封装为 Schema 对象
+    5. Schema 对象在放入 outputKey 中：outputKey.datum(wordCountResult);
+
+
+
+
+
+
+
+

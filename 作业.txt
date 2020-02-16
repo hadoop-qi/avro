@@ -1,0 +1,34 @@
+一、
+  1. 生成 employee 类
+  2. 使用 WithCodeGeneration 的方式序列化，保存到硬盘上
+  3. 使用 WithoutCodeGeneration 的方式反序列化，从硬盘上都出来
+
+二、
+  有 3 个文件
+  员工编号，员工名字，员工年龄，部门 id
+  1.txt
+  1 zhangsan 25 1
+  3 lisi     30 1
+  4 wangwu   27 1
+
+  2.txt
+  2 zhaoliu  28 2
+  7 zhouba   25 2
+
+  3.txt
+  5 bianfuxia 35 3
+  6 chaoren   37 3
+  8 ironman   30 3
+
+  写个 mapreduce 读取 3 个文件的信息，输出到一个 avro 文件中，把数据放在 AvroKey 上
+
+三、
+  写 mapreduce 读取上边保存的 avro 文件，计算每个部门有多少人
+
+四、
+  在 master 上安装 mysql 数据库
+
+五、
+  预习使用 mapreduce 读取 mysql 的数据
+
+

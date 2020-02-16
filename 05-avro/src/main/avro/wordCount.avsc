@@ -1,0 +1,8 @@
+{"namespace": "com.zhiyou100.merge",
+ "type": "record",
+ "name": "WordCountResult",
+ "fields": [
+     {"name": "word", "type": "string"},
+     {"name": "count", "type": "int"}
+ ]
+}
